@@ -4,14 +4,11 @@ import com.dat.demo_blog.entities.User;
 import com.dat.demo_blog.entities.dto.UpdateUserDto;
 import com.dat.demo_blog.entities.dto.UserDto;
 import com.dat.demo_blog.sevices.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,17 +29,18 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity<List<User>> getAllUsers() {
+  public ResponseEntity<List<UpdateUserDto>> getAllUsers() {
     return ResponseEntity.ok()
         .contentType(MediaType.APPLICATION_JSON)
-        .body(userService.findAllUsers());
+        .body(userService.findAllUsers()
+            .stream().map(user -> new UpdateUserDto(user.getUsername(), user.getEmail())).toList());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<User> getUserById(@PathVariable Long id) {
+  public ResponseEntity<UpdateUserDto> getUserById(@PathVariable Long id) {
     return ResponseEntity.ok()
         .contentType(MediaType.APPLICATION_JSON)
-        .body(userService.findUserById(id));
+        .body(new UpdateUserDto(userService.findUserById(id).getUsername(), userService.findUserById(id).getEmail()));
   }
 
   @PostMapping

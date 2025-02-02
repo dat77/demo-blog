@@ -14,6 +14,11 @@ public class UpdateUserDto {
   public UpdateUserDto() {
   }
 
+  public UpdateUserDto(String username, String email) {
+    this.username = username;
+    this.email = email;
+  }
+
   public String getUsername() {
     return username;
   }

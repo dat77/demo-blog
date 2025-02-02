@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "posts")
@@ -62,5 +63,22 @@ public class Post {
 
   public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Post post1 = (Post) o;
+    return post.equals(post1.post) && createdAt.equals(post1.createdAt);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(post, createdAt);
   }
 }
