@@ -6,18 +6,19 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
+@RequestMapping(value = "/api/healthcheck")
 public class HealthcheckController {
 
   private final ObjectMapper objectMapper;
@@ -27,7 +28,7 @@ public class HealthcheckController {
   }
 
   @Operation(summary = "Check application health")
-  @GetMapping(value = "/healthcheck")
+  @GetMapping
   public ResponseEntity<?> healthCheck(
       @Parameter(description = "Format of the response", required = false, schema = @Schema(allowableValues = {"short", "full"}))
       @RequestParam(value = "format", required = false) String format,
