@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-public class IntegrationControllerTest {
+public class ControllerIntegrationTest {
 
   @Autowired
   private MockMvc mockMvc;
